@@ -27,6 +27,10 @@ namespace EcommAPI.Entities
         [StringLength(10)]
         [Column("Password",TypeName = "varchar")]
         public string? Password { get; set; }
+        [Required]
+        [StringLength(10)]
+        [Column("Role", TypeName = "varchar")]
+        public string? Role { get; set; }
         //Navigation Properties
     }
 }

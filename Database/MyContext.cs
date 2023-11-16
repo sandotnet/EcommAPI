@@ -7,6 +7,7 @@ namespace EcommAPI.Database
         //define entity set
         public DbSet<User>? Users { get; set; }
         public DbSet<Product>? Products { get; set; }
+        public DbSet<Order> Orders { get; set; }    
         //configure connection string
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
