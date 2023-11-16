@@ -6,10 +6,16 @@ namespace EcommAPI.Services
     public class OrderService : IOrderService
     {
         private readonly MyContext _context;
-        public OrderService()
+
+        public OrderService(MyContext context)
         {
-            _context = new MyContext();
+            _context = context;
         }
+
+        //public OrderService()
+        //{
+        //    _context = new MyContext();
+        //}
 
         public Order GetOrder(Guid orderId)
         {

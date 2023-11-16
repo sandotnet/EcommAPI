@@ -10,10 +10,16 @@ namespace EcommAPI.Controllers
     public class OrderController : ControllerBase
     {
         private readonly OrderService orderService;
-        public OrderController()
+
+        public OrderController(OrderService orderService)
         {
-            orderService = new OrderService();
+            this.orderService = orderService;
         }
+
+        //public OrderController()
+        //{
+        //    orderService = new OrderService();
+        //}
         //POST /PlaceOrder
         [HttpPost,Route("PlaceOrder")]
         public IActionResult PlaceOrder(Order order)

@@ -6,10 +6,16 @@ namespace EcommAPI.Services
     public class UserService : IUserService
     {
         private readonly MyContext _context;
-        public UserService()
+
+        public UserService(MyContext context)
         {
-            _context = new MyContext();
+            _context = context;
         }
+
+        //public UserService()
+        //{
+        //    _context = new MyContext();
+        //}
         public void CreateUser(User user)
         {
             try

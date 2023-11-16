@@ -14,11 +14,20 @@ namespace EcommAPI.Controllers
     {
         private readonly IUserService userService;
         private readonly IMapper _mapper;
-        public UserController(IMapper mapper)
+
+        public UserController(IUserService userService, IMapper mapper)
         {
-            userService = new UserService();
+            this.userService = userService;
             _mapper = mapper;
         }
+
+
+
+        //public UserController(IMapper mapper)
+        //{
+        //    userService = new UserService();
+        //    _mapper = mapper;
+        //}
         //Get: /GetAllUsers
         [HttpGet,Route("GetAllUsers")]
         public IActionResult GetAllUsers()

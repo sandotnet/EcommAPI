@@ -6,10 +6,16 @@ namespace EcommAPI.Services
     public class ProductService : IProductService
     {
         private readonly MyContext _context;
-        public ProductService()
+
+        public ProductService(MyContext context)
         {
-            _context = new MyContext();
+            _context = context;
         }
+
+        //public ProductService()
+        //{
+        //    _context = new MyContext();
+        //}
         public void AddProduct(Product product) //Add Product 
         {
             try

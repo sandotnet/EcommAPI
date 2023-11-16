@@ -13,11 +13,18 @@ namespace EcommAPI.Controllers
     {
         private readonly IProductService productService;
         private readonly IMapper _mapper;
-        public ProductController(IMapper mapper)
+
+        public ProductController(IProductService productService, IMapper mapper)
         {
-            productService = new ProductService();
+            this.productService = productService;
             _mapper = mapper;
         }
+
+        //public ProductController(IMapper mapper)
+        //{
+        //    productService = new ProductService();
+        //    _mapper = mapper;
+        //}
         //end points
         //GET /GetAllProducts
         [HttpGet,Route("GetAllProducts")]
