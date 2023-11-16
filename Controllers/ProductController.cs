@@ -1,4 +1,6 @@
-﻿using EcommAPI.Entities;
+﻿using AutoMapper;
+using EcommAPI.DTOs;
+using EcommAPI.Entities;
 using EcommAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +12,11 @@ namespace EcommAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService productService;
-        public ProductController()
+        private readonly IMapper _mapper;
+        public ProductController(IMapper mapper)
         {
             productService = new ProductService();
+            _mapper = mapper;
         }
         //end points
         //GET /GetAllProducts
@@ -22,7 +26,8 @@ namespace EcommAPI.Controllers
             try
             {
                 List<Product> products=productService.GetProducts();
-                return StatusCode(200, products); //here products details are sending in json format
+                List<ProductDto> productsDto = _mapper.Map<List<ProductDto>>(products); //converting enity to dto
+                return StatusCode(200, productsDto); //here products details are sending in json format
             }
             catch (Exception ex)
             {
@@ -37,6 +42,7 @@ namespace EcommAPI.Controllers
             try
             {
                 Product product=productService.GetProductById(productId);
+                ProductDto productDto=_mapper.Map<ProductDto>(product);
                 if (product != null)
                     return StatusCode(200, product);
                 else
@@ -51,10 +57,11 @@ namespace EcommAPI.Controllers
         }
         //POST /AddProduct
         [HttpPost,Route("AddProduct")]
-        public IActionResult Add([FromBody] Product product)
+        public IActionResult Add([FromBody] ProductDto productDto)
         {
             try
             {
+                Product product=_mapper.Map<Product>(productDto); //converting entity from dto
                 productService.AddProduct(product);
                 return StatusCode(200, product); //after successfully add product we return same product in json form
                 //return Ok(); //return emplty result
@@ -67,10 +74,11 @@ namespace EcommAPI.Controllers
         }
         //PUT /EditProduct
         [HttpPut,Route("EditProduct")]
-        public IActionResult Edit(Product product)
+        public IActionResult Edit(ProductDto productDto)
         {
             try
             {
+                Product product = _mapper.Map<Product>(productDto); //converting entity from dto
                 productService.UpdateProduct(product);
                 return StatusCode(200, product);
             }

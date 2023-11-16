@@ -1,4 +1,6 @@
-﻿using EcommAPI.Entities;
+﻿using AutoMapper;
+using EcommAPI.DTOs;
+using EcommAPI.Entities;
 using EcommAPI.Models;
 using EcommAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,9 +13,11 @@ namespace EcommAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
-        public UserController()
+        private readonly IMapper _mapper;
+        public UserController(IMapper mapper)
         {
             userService = new UserService();
+            _mapper = mapper;
         }
         //Get: /GetAllUsers
         [HttpGet,Route("GetAllUsers")]
@@ -22,6 +26,7 @@ namespace EcommAPI.Controllers
             try
             {
                 List<User> users = userService.GetAllUsers();
+                List<UserDto> usersDto = _mapper.Map<List<UserDto>>(users);
                 return StatusCode(200, users);
 
             }
@@ -32,10 +37,11 @@ namespace EcommAPI.Controllers
             }
         }
         [HttpPost,Route("Register")]
-        public IActionResult AddUser(User user)
+        public IActionResult AddUser(UserDto userDto)
         {
             try
             {
+                User user=_mapper.Map<User>(userDto);
                userService.CreateUser(user);
                 return StatusCode(200,user);
                // return Ok(); //return emplty result
@@ -49,10 +55,11 @@ namespace EcommAPI.Controllers
         }
         //PUT /EditUser
         [HttpPut,Route("EditUser")]
-        public IActionResult EditUser(User user)
+        public IActionResult EditUser(UserDto userDto)
         {
             try
             {
+                User user = _mapper.Map<User>(userDto);
                 userService.EditUser(user);
                 return StatusCode(200, user);
                 // return Ok(); //return emplty result
