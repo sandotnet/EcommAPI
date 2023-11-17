@@ -1,5 +1,6 @@
 ﻿using EcommAPI.Entities;
 using EcommAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace EcommAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize(Roles = "Admin")]
     public class OrderController : ControllerBase
     {
         private readonly OrderService orderService;
@@ -22,6 +24,7 @@ namespace EcommAPI.Controllers
         //}
         //POST /PlaceOrder
         [HttpPost,Route("PlaceOrder")]
+        [Authorize(Roles = "Customer")]
         public IActionResult PlaceOrder(Order order)
         {
             try
@@ -38,6 +41,7 @@ namespace EcommAPI.Controllers
         }
         //Get /GetOrdersByUser
         [HttpGet,Route("GetOrdersByUser/{userId}")]
+        [Authorize(Roles = "Customer")]
         public IActionResult GetOrdersByUser(string userId)
         {
             try
@@ -53,6 +57,7 @@ namespace EcommAPI.Controllers
         }
         //Get //GetAllOrders
         [HttpGet,Route("GetOrders")]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetOrders()
         {
             try

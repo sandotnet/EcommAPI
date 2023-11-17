@@ -2,6 +2,7 @@
 using EcommAPI.DTOs;
 using EcommAPI.Entities;
 using EcommAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,7 @@ namespace EcommAPI.Controllers
         //end points
         //GET /GetAllProducts
         [HttpGet,Route("GetAllProducts")]
+        [Authorize(Roles ="Admin")]
         public IActionResult GetAll()
         {
             try
@@ -44,6 +46,7 @@ namespace EcommAPI.Controllers
         }
         //Get /GetProductById/1
         [HttpGet,Route("GetProductById/{productId}")]
+        [Authorize] //all authenticated users can access
         public IActionResult Get(int productId)
         {
             try
@@ -63,6 +66,7 @@ namespace EcommAPI.Controllers
             }
         }
         //POST /AddProduct
+        [Authorize(Roles = "Admin")]
         [HttpPost,Route("AddProduct")]
         public IActionResult Add([FromBody] ProductDto productDto)
         {
@@ -81,6 +85,7 @@ namespace EcommAPI.Controllers
         }
         //PUT /EditProduct
         [HttpPut,Route("EditProduct")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(ProductDto productDto)
         {
             try
@@ -97,6 +102,7 @@ namespace EcommAPI.Controllers
         }
         //Delete /DeleteProduct/1
         [HttpDelete,Route("DeleteProduct/{productId}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int productId)
         {
             try
