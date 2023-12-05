@@ -72,6 +72,15 @@ namespace EcommAPI
         }
     });
             });
+            //enable cors
+            builder.Services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options =>
+       options.AllowAnyOrigin() //allows any client url
+                .AllowAnyMethod() //allows all http methods like(get,post,put and delete)
+                .AllowAnyHeader() //all any header like request,response and so on
+                );
+            });
 
             var app = builder.Build();
 
@@ -81,7 +90,8 @@ namespace EcommAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            //add cors middleware
+            app.UseCors("AllowOrigin");
             app.UseAuthentication(); //add Authentication Middleware to the Application
             app.UseAuthorization();
 
